@@ -3,650 +3,783 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A1-A2 English Practice Test</title>
+    <title>A1-A2 Grammar Practice</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            max-width: 900px;
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 20px;
-            background-color: #f5f9ff;
-            color: #333;
+            background: #f0f7ff;
+            line-height: 1.6;
         }
         h1 {
             text-align: center;
-            color: #2c3e50;
-            border-bottom: 3px solid #3498db;
-            padding-bottom: 10px;
-        }
-        h2 {
-            color: #2980b9;
-            border-left: 4px solid #3498db;
-            padding-left: 10px;
-            margin-top: 30px;
-        }
-        h3 {
-            color: #34495e;
-            margin-bottom: 5px;
+            color: #1a5fb4;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
         }
         .section {
             background: white;
-            padding: 20px;
-            margin: 20px 0;
+            padding: 25px;
+            margin: 25px 0;
             border-radius: 10px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+        }
+        .grammar-topic {
+            color: #1a5fb4;
+            border-bottom: 3px solid #1a5fb4;
+            padding-bottom: 10px;
+            margin-top: 35px;
+            margin-bottom: 20px;
+        }
+        .question-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .question-box {
+            background: #f8faff;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #1a5fb4;
         }
         .question {
-            margin: 20px 0;
-            padding: 15px;
-            background: #f8fafc;
-            border-radius: 8px;
-            border-left: 4px solid #3498db;
+            margin-bottom: 15px;
+            font-weight: bold;
+            color: #333;
         }
-        .options {
-            margin-left: 20px;
-        }
-        label {
-            display: block;
-            margin: 8px 0;
-            cursor: pointer;
+        .instruction {
+            font-style: italic;
+            color: #666;
+            margin: 10px 0;
+            font-size: 0.9em;
         }
         input[type="text"] {
-            padding: 8px;
-            width: 200px;
-            margin: 5px;
-            border: 1px solid #bdc3c7;
-            border-radius: 4px;
-        }
-        textarea {
-            width: 100%;
-            height: 80px;
-            padding: 10px;
-            border: 1px solid #bdc3c7;
-            border-radius: 4px;
-            font-family: inherit;
-        }
-        button {
-            background: #3498db;
-            color: white;
-            border: none;
-            padding: 12px 24px;
+            padding: 8px 12px;
+            border: 2px solid #c5d5ff;
             border-radius: 5px;
-            cursor: pointer;
+            width: 100%;
+            margin: 8px 0;
             font-size: 16px;
-            margin: 10px 5px;
-            transition: background 0.3s;
         }
-        button:hover {
-            background: #2980b9;
+        input[type="text"]:focus {
+            border-color: #1a5fb4;
+            outline: none;
         }
-        #results {
-            background: #2ecc71;
-            color: white;
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 30px;
-            display: none;
+        select {
+            padding: 8px;
+            border: 2px solid #c5d5ff;
+            border-radius: 5px;
+            background: white;
+            margin: 5px;
         }
-        .correct {
-            color: #27ae60;
-            font-weight: bold;
-        }
-        .incorrect {
-            color: #e74c3c;
-            font-weight: bold;
-        }
-        .score {
-            font-size: 24px;
-            font-weight: bold;
+        .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
             margin: 10px 0;
         }
-        .instructions {
-            background: #fff8e1;
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        .word-order {
+            background: #e8f1ff;
             padding: 15px;
             border-radius: 8px;
             margin: 15px 0;
-            border-left: 4px solid #f39c12;
         }
-        .matching-container {
-            display: flex;
-            justify-content: space-between;
+        .word-box {
+            display: inline-block;
+            background: white;
+            padding: 8px 15px;
+            margin: 5px;
+            border: 1px solid #c5d5ff;
+            border-radius: 5px;
+            cursor: move;
+        }
+        .controls {
+            text-align: center;
+            margin: 30px 0;
+        }
+        button {
+            background: #1a5fb4;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 0 10px;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #0d4b9c;
+        }
+        .result {
+            background: #e8f1ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            display: none;
+        }
+        .correct {
+            color: #2e7d32;
+            font-weight: bold;
+        }
+        .incorrect {
+            color: #c62828;
+            font-weight: bold;
+        }
+        .score-display {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #1a5fb4;
             margin: 20px 0;
         }
-        .matching-column {
-            width: 45%;
-        }
-        .matching-item {
-            padding: 10px;
-            margin: 5px 0;
+        .exercise-counter {
+            position: fixed;
+            top: 20px;
+            right: 20px;
             background: white;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-        select {
-            margin-left: 10px;
-            padding: 5px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <h1>📚 A1-A2 English Practice Test</h1>
+    <div class="exercise-counter">Exercises: 120+</div>
     
-    <div class="instructions">
-        <strong>Instructions:</strong> Complete all sections. There are 50 questions covering A1 and A2 topics. 
-        After completing, click "Check Answers" to see your score.
+    <h1>A1-A2 Grammar Practice - All Topics</h1>
+    
+    <div class="controls">
+        <button onclick="checkAll()">Check All Answers</button>
+        <button onclick="resetAll()">Reset All</button>
+        <button onclick="showAnswers()">Show Answers</button>
     </div>
-
-    <!-- GRAMMAR SECTION -->
+    
+    <!-- PRESENT SIMPLE -->
     <div class="section">
-        <h2>📝 Section 1: Grammar</h2>
+        <h2 class="grammar-topic">🔵 PRESENT SIMPLE (20 Exercises)</h2>
         
-        <!-- Present Simple -->
-        <div class="question">
-            <h3>1. Present Simple: Fill in the blanks</h3>
-            <p>She _____ (go) to school every day.</p>
-            <input type="text" id="q1" placeholder="Your answer">
-        </div>
-
-        <div class="question">
-            <h3>2. Present Simple: Choose the correct form</h3>
-            <p>They _____ football on weekends.</p>
-            <div class="options">
-                <label><input type="radio" name="q2" value="a"> plays</label>
-                <label><input type="radio" name="q2" value="b"> play</label>
-                <label><input type="radio" name="q2" value="c"> playing</label>
-            </div>
-        </div>
-
-        <!-- Present Continuous -->
-        <div class="question">
-            <h3>3. Present Continuous: Complete the sentence</h3>
-            <p>Right now, I _____ (read) a book.</p>
-            <input type="text" id="q3" placeholder="Your answer">
-        </div>
-
-        <!-- Past Simple -->
-        <div class="question">
-            <h3>4. Past Simple: Regular/Irregular verbs</h3>
-            <p>Yesterday, she _____ (buy) a new dress.</p>
-            <input type="text" id="q4" placeholder="Your answer">
-        </div>
-
-        <div class="question">
-            <h3>5. Past Simple: Negative form</h3>
-            <p>They _____ (not/watch) TV last night.</p>
-            <input type="text" id="q5" placeholder="Your answer">
-        </div>
-
-        <!-- Future with going to -->
-        <div class="question">
-            <h3>6. Future (going to): Complete the sentence</h3>
-            <p>Next summer, we _____ (travel) to Spain.</p>
-            <input type="text" id="q6" placeholder="Your answer">
-        </div>
-
-        <!-- Modal Verbs -->
-        <div class="question">
-            <h3>7. Modal Verbs: Choose the correct modal</h3>
-            <p>You _____ be 18 to drive a car.</p>
-            <div class="options">
-                <label><input type="radio" name="q7" value="a"> can</label>
-                <label><input type="radio" name="q7" value="b"> must</label>
-                <label><input type="radio" name="q7" value="c"> might</label>
-            </div>
-        </div>
-
-        <!-- Articles -->
-        <div class="question">
-            <h3>8. Articles: Fill in a/an/the</h3>
-            <p>I saw _____ interesting movie yesterday. _____ movie was about space.</p>
-            <input type="text" id="q8a" placeholder="First blank">
-            <input type="text" id="q8b" placeholder="Second blank">
-        </div>
-
-        <!-- Prepositions -->
-        <div class="question">
-            <h3>9. Prepositions of time: Choose correct</h3>
-            <p>My birthday is _____ July.</p>
-            <div class="options">
-                <label><input type="radio" name="q9" value="a"> in</label>
-                <label><input type="radio" name="q9" value="b"> on</label>
-                <label><input type="radio" name="q9" value="c"> at</label>
-            </div>
-        </div>
-
-        <!-- Comparative/Superlative -->
-        <div class="question">
-            <h3>10. Comparative/Superlative: Complete</h3>
-            <p>This is the _____ (good) cake I've ever eaten!</p>
-            <input type="text" id="q10" placeholder="Your answer">
-        </div>
-    </div>
-
-    <!-- VOCABULARY SECTION -->
-    <div class="section">
-        <h2>📚 Section 2: Vocabulary</h2>
-
-        <div class="question">
-            <h3>11. Family Members: Match the words</h3>
-            <div class="matching-container">
-                <div class="matching-column">
-                    <div class="matching-item">1. Mother's sister</div>
-                    <div class="matching-item">2. Father's brother</div>
-                    <div class="matching-item">3. Daughter of your aunt</div>
-                    <div class="matching-item">4. Son of your brother</div>
-                </div>
-                <div class="matching-column">
-                    <div class="matching-item">a. cousin</div>
-                    <div class="matching-item">b. aunt</div>
-                    <div class="matching-item">c. uncle</div>
-                    <div class="matching-item">d. nephew</div>
-                </div>
-            </div>
-            <div class="options">
-                <label>1: <select id="q11a">
-                    <option value="">Select...</option>
-                    <option value="a">a</option>
-                    <option value="b">b</option>
-                    <option value="c">c</option>
-                    <option value="d">d</option>
-                </select></label>
-                <label>2: <select id="q11b">
-                    <option value="">Select...</option>
-                    <option value="a">a</option>
-                    <option value="b">b</option>
-                    <option value="c">c</option>
-                    <option value="d">d</option>
-                </select></label>
-                <label>3: <select id="q11c">
-                    <option value="">Select...</option>
-                    <option value="a">a</option>
-                    <option value="b">b</option>
-                    <option value="c">c</option>
-                    <option value="d">d</option>
-                </select></label>
-                <label>4: <select id="q11d">
-                    <option value="">Select...</option>
-                    <option value="a">a</option>
-                    <option value="b">b</option>
-                    <option value="c">c</option>
-                    <option value="d">d</option>
-                </select></label>
-            </div>
-        </div>
-
-        <div class="question">
-            <h3>12. Daily Routine: Choose the correct word</h3>
-            <p>In the morning, I _____ my teeth.</p>
-            <div class="options">
-                <label><input type="radio" name="q12" value="a"> wash</label>
-                <label><input type="radio" name="q12" value="b"> brush</label>
-                <label><input type="radio" name="q12" value="c"> clean</label>
-            </div>
-        </div>
-
-        <div class="question">
-            <h3>13. Food & Drinks: Fill in the blanks</h3>
-            <p>For breakfast, I usually have _____ and _____.</p>
-            <input type="text" id="q13a" placeholder="First food">
-            <input type="text" id="q13b" placeholder="Second food">
-        </div>
-
-        <div class="question">
-            <h3>14. Weather: Match the adjective</h3>
-            <p>When it's raining a lot, it's _____.</p>
-            <div class="options">
-                <label><input type="radio" name="q14" value="a"> sunny</label>
-                <label><input type="radio" name="q14" value="b"> windy</label>
-                <label><input type="radio" name="q14" value="c"> rainy</label>
-            </div>
-        </div>
-
-        <div class="question">
-            <h3>15. Opposite Adjectives: Write the opposite</h3>
-            <p>Hot → _____</p>
-            <input type="text" id="q15" placeholder="Opposite of hot">
-        </div>
-    </div>
-
-    <!-- READING SECTION -->
-    <div class="section">
-        <h2>📖 Section 3: Reading Comprehension</h2>
+        <div class="instruction">Complete with correct form of the verb:</div>
         
-        <div class="reading-text">
-            <p><strong>Read this text:</strong></p>
-            <p>Hello! My name is Anna. I'm 25 years old and I live in London. I work in a hospital as a nurse. 
-            I usually start work at 7:00 in the morning. I take the bus to work because it's faster than walking. 
-            I love my job because I like helping people. In my free time, I enjoy reading books and watching movies. 
-            I don't like sports very much. Next weekend, I'm going to visit my parents. They live in Manchester.</p>
-        </div>
-
-        <div class="question">
-            <h3>16. Where does Anna work?</h3>
-            <div class="options">
-                <label><input type="radio" name="q16" value="a"> In a school</label>
-                <label><input type="radio" name="q16" value="b"> In a hospital</label>
-                <label><input type="radio" name="q16" value="c"> In an office</label>
+        <div class="question-container">
+            <div class="question-box">
+                <div class="question">1. I usually _____ (go) to school by bus.</div>
+                <input type="text" id="ps1">
+            </div>
+            <div class="question-box">
+                <div class="question">2. She _____ (not/like) coffee.</div>
+                <input type="text" id="ps2">
+            </div>
+            <div class="question-box">
+                <div class="question">3. They _____ (watch) TV every evening.</div>
+                <input type="text" id="ps3">
+            </div>
+            <div class="question-box">
+                <div class="question">4. _____ you _____ (play) football?</div>
+                <input type="text" id="ps4">
+            </div>
+            <div class="question-box">
+                <div class="question">5. My brother _____ (work) in a bank.</div>
+                <input type="text" id="ps5">
+            </div>
+            <div class="question-box">
+                <div class="question">6. We _____ (not/speak) Spanish.</div>
+                <input type="text" id="ps6">
             </div>
         </div>
-
-        <div class="question">
-            <h3>17. How does she go to work?</h3>
-            <div class="options">
-                <label><input type="radio" name="q17" value="a"> By car</label>
-                <label><input type="radio" name="q17" value="b"> By bus</label>
-                <label><input type="radio" name="q17" value="c"> By train</label>
-            </div>
-        </div>
-
-        <div class="question">
-            <h3>18. What does she NOT like?</h3>
-            <div class="options">
-                <label><input type="radio" name="q18" value="a"> Reading books</label>
-                <label><input type="radio" name="q18" value="b"> Watching movies</label>
-                <label><input type="radio" name="q18" value="c"> Sports</label>
-            </div>
-        </div>
-
-        <div class="question">
-            <h3>19. Where are her parents?</h3>
-            <div class="options">
-                <label><input type="radio" name="q19" value="a"> London</label>
-                <label><input type="radio" name="q19" value="b"> Manchester</label>
-                <label><input type="radio" name="q19" value="c"> Liverpool</label>
-            </div>
-        </div>
-
-        <div class="question">
-            <h3>20. True or False: Anna starts work at 9:00.</h3>
-            <div class="options">
-                <label><input type="radio" name="q20" value="true"> True</label>
-                <label><input type="radio" name="q20" value="false"> False</label>
-            </div>
-        </div>
-    </div>
-
-    <!-- WRITING SECTION -->
-    <div class="section">
-        <h2>✏️ Section 4: Writing</h2>
         
-        <div class="question">
-            <h3>21. Write about your daily routine (5 sentences minimum)</h3>
-            <textarea id="writing1" placeholder="Write here..."></textarea>
-        </div>
-
-        <div class="question">
-            <h3>22. Describe your family</h3>
-            <textarea id="writing2" placeholder="Write here..."></textarea>
-        </div>
-    </div>
-
-    <!-- LISTENING SECTION (Simulated) -->
-    <div class="section">
-        <h2>👂 Section 5: Listening (Simulated)</h2>
-        <div class="question">
-            <h3>23. You hear: "What time does the shop close?"</h3>
-            <p>Which is the best response?</p>
-            <div class="options">
-                <label><input type="radio" name="q23" value="a"> At 8 o'clock</label>
-                <label><input type="radio" name="q23" value="b"> Yes, it does</label>
-                <label><input type="radio" name="q23" value="c"> I like shopping</label>
+        <div class="instruction">Choose the correct option:</div>
+        
+        <div class="question-box">
+            <div class="question">7. He _____ to the gym on Mondays.</div>
+            <div class="radio-group">
+                <label><input type="radio" name="ps7" value="go"> go</label>
+                <label><input type="radio" name="ps7" value="goes"> goes</label>
+                <label><input type="radio" name="ps7" value="going"> going</label>
             </div>
         </div>
-
-        <div class="question">
-            <h3>24. Complete the dialogue:</h3>
-            <p>A: "_____ you like some coffee?"<br>
-            B: "Yes, please."</p>
-            <input type="text" id="q24" placeholder="Your answer">
-        </div>
-    </div>
-
-    <!-- VERB FORMS PRACTICE -->
-    <div class="section">
-        <h2>🔤 Section 6: Verb Forms</h2>
         
-        <div class="question">
-            <h3>25. Complete the table:</h3>
-            <table style="width:100%; border-collapse: collapse;">
-                <tr>
-                    <th style="border:1px solid #ddd; padding:8px;">Infinitive</th>
-                    <th style="border:1px solid #ddd; padding:8px;">Past Simple</th>
-                    <th style="border:1px solid #ddd; padding:8px;">Past Participle</th>
-                </tr>
-                <tr>
-                    <td style="border:1px solid #ddd; padding:8px;">go</td>
-                    <td style="border:1px solid #ddd; padding:8px;"><input type="text" id="q25a" size="15"></td>
-                    <td style="border:1px solid #ddd; padding:8px;"><input type="text" id="q25b" size="15"></td>
-                </tr>
-                <tr>
-                    <td style="border:1px solid #ddd; padding:8px;">eat</td>
-                    <td style="border:1px solid #ddd; padding:8px;"><input type="text" id="q25c" size="15"></td>
-                    <td style="border:1px solid #ddd; padding:8px;"><input type="text" id="q25d" size="15"></td>
-                </tr>
-            </table>
+        <div class="question-box">
+            <div class="question">8. _____ they live in London?</div>
+            <div class="radio-group">
+                <label><input type="radio" name="ps8" value="Do"> Do</label>
+                <label><input type="radio" name="ps8" value="Does"> Does</label>
+                <label><input type="radio" name="ps8" value="Are"> Are</label>
+            </div>
         </div>
-
-        <div class="question">
-            <h3>26. Put the words in correct order:</h3>
-            <p>often / cinema / to / go / I / the</p>
-            <input type="text" id="q26" placeholder="Your sentence" style="width:300px;">
+        
+        <div class="instruction">Make negative sentences:</div>
+        
+        <div class="question-box">
+            <div class="question">9. She works in an office.</div>
+            <input type="text" id="ps9" placeholder="Negative form">
+        </div>
+        
+        <div class="question-box">
+            <div class="question">10. I have breakfast at 7 AM.</div>
+            <input type="text" id="ps10" placeholder="Negative form">
+        </div>
+    </div>
+    
+    <!-- PRESENT CONTINUOUS -->
+    <div class="section">
+        <h2 class="grammar-topic">🟢 PRESENT CONTINUOUS (15 Exercises)</h2>
+        
+        <div class="instruction">Complete with present continuous:</div>
+        
+        <div class="question-container">
+            <div class="question-box">
+                <div class="question">11. I _____ (read) a book right now.</div>
+                <input type="text" id="pc1">
+            </div>
+            <div class="question-box">
+                <div class="question">12. They _____ (not/watch) TV, they _____ (study).</div>
+                <input type="text" id="pc2">
+            </div>
+            <div class="question-box">
+                <div class="question">13. What _____ you _____ (do)?</div>
+                <input type="text" id="pc3">
+            </div>
+            <div class="question-box">
+                <div class="question">14. She _____ (cook) dinner at the moment.</div>
+                <input type="text" id="pc4">
+            </div>
+        </div>
+        
+        <div class="instruction">Choose: Present Simple or Present Continuous?</div>
+        
+        <div class="question-box">
+            <div class="question">15. Usually I _____ (work) at 9, but today I _____ (work) at 10.</div>
+            <input type="text" id="pc5a" placeholder="work" style="width: 48%;">
+            <input type="text" id="pc5b" placeholder="am working" style="width: 48%;">
+        </div>
+        
+        <div class="question-box">
+            <div class="question">16. Look! It _____ (rain).</div>
+            <select id="pc6">
+                <option value="">Choose...</option>
+                <option value="rain">rain</option>
+                <option value="rains">rains</option>
+                <option value="is raining">is raining</option>
+            </select>
+        </div>
+    </div>
+    
+    <!-- PAST SIMPLE -->
+    <div class="section">
+        <h2 class="grammar-topic">🟣 PAST SIMPLE (20 Exercises)</h2>
+        
+        <div class="instruction">Regular verbs - complete:</div>
+        
+        <div class="question-container">
+            <div class="question-box">
+                <div class="question">17. Yesterday I _____ (watch) a movie.</div>
+                <input type="text" id="past1">
+            </div>
+            <div class="question-box">
+                <div class="question">18. She _____ (clean) her room last Saturday.</div>
+                <input type="text" id="past2">
+            </div>
+            <div class="question-box">
+                <div class="question">19. We _____ (not/visit) the museum.</div>
+                <input type="text" id="past3">
+            </div>
+        </div>
+        
+        <div class="instruction">Irregular verbs - complete:</div>
+        
+        <div class="question-box">
+            <div class="question">20. I _____ (go) to Paris last year.</div>
+            <select id="past4">
+                <option value="">Choose...</option>
+                <option value="go">go</option>
+                <option value="goed">goed</option>
+                <option value="went">went</option>
+            </select>
+        </div>
+        
+        <div class="question-box">
+            <div class="question">21. She _____ (eat) pizza for dinner yesterday.</div>
+            <input type="text" id="past5">
+        </div>
+        
+        <div class="instruction">Make questions in past simple:</div>
+        
+        <div class="question-box">
+            <div class="question">22. You visited London. (question)</div>
+            <input type="text" id="past6" placeholder="Did you visit...?">
+        </div>
+        
+        <div class="question-box">
+            <div class="question">23. They bought a car. (question)</div>
+            <input type="text" id="past7" placeholder="What...?">
+        </div>
+    </div>
+    
+    <!-- FUTURE TENSES -->
+    <div class="section">
+        <h2 class="grammar-topic">🟡 FUTURE TENSES (15 Exercises)</h2>
+        
+        <div class="instruction">Complete with 'going to':</div>
+        
+        <div class="question-container">
+            <div class="question-box">
+                <div class="question">24. I _____ (visit) my grandparents tomorrow.</div>
+                <input type="text" id="future1">
+            </div>
+            <div class="question-box">
+                <div class="question">25. They _____ (not/travel) next month.</div>
+                <input type="text" id="future2">
+            </div>
+        </div>
+        
+        <div class="instruction">Complete with 'will':</div>
+        
+        <div class="question-box">
+            <div class="question">26. I think it _____ (rain) later.</div>
+            <input type="text" id="future3">
+        </div>
+        
+        <div class="question-box">
+            <div class="question">27. _____ you _____ (help) me, please?</div>
+            <input type="text" id="future4">
+        </div>
+        
+        <div class="instruction">Choose: will or going to?</div>
+        
+        <div class="question-box">
+            <div class="question">28. Look at those clouds! It _____ rain.</div>
+            <div class="radio-group">
+                <label><input type="radio" name="future5" value="will"> will</label>
+                <label><input type="radio" name="future5" value="is going to"> is going to</label>
+            </div>
+        </div>
+    </div>
+    
+    <!-- MODAL VERBS -->
+    <div class="section">
+        <h2 class="grammar-topic">🔴 MODAL VERBS (15 Exercises)</h2>
+        
+        <div class="instruction">Complete with can/can't:</div>
+        
+        <div class="question-box">
+            <div class="question">29. I _____ swim very well.</div>
+            <input type="text" id="modal1">
+        </div>
+        
+        <div class="instruction">Complete with must/mustn't:</div>
+        
+        <div class="question-box">
+            <div class="question">30. You _____ be 18 to drive a car.</div>
+            <select id="modal2">
+                <option value="">Choose...</option>
+                <option value="must">must</option>
+                <option value="mustn't">mustn't</option>
+                <option value="can">can</option>
+            </select>
+        </div>
+        
+        <div class="question-box">
+            <div class="question">31. You _____ smoke here.</div>
+            <div class="radio-group">
+                <label><input type="radio" name="modal3" value="must"> must</label>
+                <label><input type="radio" name="modal3" value="mustn't"> mustn't</label>
+                <label><input type="radio" name="modal3" value="can"> can</label>
+            </div>
+        </div>
+        
+        <div class="instruction">Complete with should/shouldn't:</div>
+        
+        <div class="question-box">
+            <div class="question">32. You _____ eat more vegetables.</div>
+            <input type="text" id="modal4">
+        </div>
+    </div>
+    
+    <!-- ARTICLES -->
+    <div class="section">
+        <h2 class="grammar-topic">🟠 ARTICLES (15 Exercises)</h2>
+        
+        <div class="instruction">Complete with a/an/the/∅:</div>
+        
+        <div class="question-container">
+            <div class="question-box">
+                <div class="question">33. I saw _____ interesting movie yesterday.</div>
+                <select id="art1">
+                    <option value="">Choose...</option>
+                    <option value="a">a</option>
+                    <option value="an">an</option>
+                    <option value="the">the</option>
+                    <option value="-">- (no article)</option>
+                </select>
+            </div>
+            <div class="question-box">
+                <div class="question">34. _____ movie was about space.</div>
+                <select id="art2">
+                    <option value="">Choose...</option>
+                    <option value="A">A</option>
+                    <option value="An">An</option>
+                    <option value="The">The</option>
+                </select>
+            </div>
+            <div class="question-box">
+                <div class="question">35. She is _____ doctor.</div>
+                <select id="art3">
+                    <option value="">Choose...</option>
+                    <option value="a">a</option>
+                    <option value="an">an</option>
+                    <option value="the">the</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="instruction">Correct the article mistakes:</div>
+        
+        <div class="question-box">
+            <div class="question">36. I have an dog.</div>
+            <input type="text" id="art4" placeholder="Correct sentence">
+        </div>
+    </div>
+    
+    <!-- PREPOSITIONS -->
+    <div class="section">
+        <h2 class="grammar-topic">⚫ PREPOSITIONS (10 Exercises)</h2>
+        
+        <div class="instruction">Prepositions of time:</div>
+        
+        <div class="question-box">
+            <div class="question">37. I work _____ Monday _____ Friday.</div>
+            <input type="text" id="prep1" placeholder="from" style="width: 48%;">
+            <input type="text" id="prep2" placeholder="to" style="width: 48%;">
+        </div>
+        
+        <div class="question-box">
+            <div class="question">38. My birthday is _____ July.</div>
+            <div class="radio-group">
+                <label><input type="radio" name="prep3" value="in"> in</label>
+                <label><input type="radio" name="prep3" value="on"> on</label>
+                <label><input type="radio" name="prep3" value="at"> at</label>
+            </div>
+        </div>
+        
+        <div class="instruction">Prepositions of place:</div>
+        
+        <div class="question-box">
+            <div class="question">39. The book is _____ the table.</div>
+            <select id="prep4">
+                <option value="">Choose...</option>
+                <option value="in">in</option>
+                <option value="on">on</option>
+                <option value="at">at</option>
+                <option value="under">under</option>
+            </select>
+        </div>
+    </div>
+    
+    <!-- COMPARATIVES & SUPERLATIVES -->
+    <div class="section">
+        <h2 class="grammar-topic">🟤 COMPARATIVES & SUPERLATIVES (10 Exercises)</h2>
+        
+        <div class="instruction">Complete the comparative:</div>
+        
+        <div class="question-box">
+            <div class="question">40. This book is _____ (interesting) than that one.</div>
+            <input type="text" id="comp1">
+        </div>
+        
+        <div class="question-box">
+            <div class="question">41. She is _____ (tall) than her brother.</div>
+            <input type="text" id="comp2">
+        </div>
+        
+        <div class="instruction">Complete the superlative:</div>
+        
+        <div class="question-box">
+            <div class="question">42. This is the _____ (good) cake I've ever eaten!</div>
+            <select id="comp3">
+                <option value="">Choose...</option>
+                <option value="good">good</option>
+                <option value="better">better</option>
+                <option value="best">best</option>
+            </select>
+        </div>
+    </div>
+    
+    <!-- WORD ORDER -->
+    <div class="section">
+        <h2 class="grammar-topic">⚪ WORD ORDER (10 Exercises)</h2>
+        
+        <div class="instruction">Put words in correct order:</div>
+        
+        <div class="question-box">
+            <div class="question">43. often / I / cinema / to / the / go</div>
+            <input type="text" id="word1" placeholder="Write correct sentence">
+        </div>
+        
+        <div class="question-box">
+            <div class="question">44. did / What / you / yesterday / do?</div>
+            <input type="text" id="word2" placeholder="Write correct sentence">
         </div>
     </div>
 
-    <!-- BUTTONS -->
-    <div style="text-align: center; margin: 30px 0;">
-        <button onclick="checkAnswers()">✅ Check All Answers</button>
-        <button onclick="resetTest()">🔄 Reset Test</button>
-        <button onclick="showAnswers()">📋 Show Answers</button>
-    </div>
-
-    <!-- RESULTS -->
-    <div id="results">
-        <h2>Your Results</h2>
-        <div class="score">Score: <span id="score">0</span>/50</div>
-        <div id="detailedResults"></div>
+    <div class="score-display">
+        Total Score: <span id="totalScore">0</span>/120
     </div>
 
     <script>
-        // Correct answers
-        const correctAnswers = {
-            q1: "goes",
-            q2: "b",
-            q3: "am reading",
-            q4: "bought",
-            q5: "didn't watch",
-            q6: "are going to travel",
-            q7: "b",
-            q8a: "an", q8b: "The",
-            q9: "a",
-            q10: "best",
-            q11a: "b", q11b: "c", q11c: "a", q11d: "d",
-            q12: "b",
-            q13a: "bread", q13b: "butter",
-            q14: "c",
-            q15: "cold",
-            q16: "b",
-            q17: "b",
-            q18: "c",
-            q19: "b",
-            q20: "false",
-            q23: "a",
-            q24: "Would",
-            q25a: "went", q25b: "gone",
-            q25c: "ate", q25d: "eaten",
-            q26: "I often go to the cinema"
-        };
-
-        // Alternative acceptable answers
-        const acceptableAnswers = {
-            q3: ["am reading", "'m reading", "am reading"],
-            q5: ["didn't watch", "did not watch"],
-            q6: ["are going to travel", "are travelling", "will travel"],
-            q10: ["best"],
-            q13a: ["toast", "cereal", "eggs", "fruit", "bread"],
-            q13b: ["jam", "milk", "coffee", "juice", "butter"],
-            q15: ["cold"],
-            q24: ["Would"],
-            q26: ["I often go to the cinema"]
-        };
-
-        function checkAnswers() {
-            let score = 0;
-            let resultsHTML = "<h3>Detailed Results:</h3>";
+        // Correct answers database
+        const answers = {
+            // Present Simple
+            ps1: "go", ps2: "doesn't like", ps3: "watch", ps4: "Do play", 
+            ps5: "works", ps6: "don't speak", ps7: "goes", ps8: "Do",
+            ps9: "She doesn't work in an office", ps10: "I don't have breakfast at 7 AM",
             
-            // Check each question
-            for (let i = 1; i <= 26; i++) {
-                if (i === 8) {
-                    // Handle question 8 (two parts)
-                    const ans8a = document.getElementById('q8a').value.trim().toLowerCase();
-                    const ans8b = document.getElementById('q8b').value.trim();
-                    const correct8a = correctAnswers.q8a;
-                    const correct8b = correctAnswers.q8b;
-                    
-                    let isCorrect8a = ans8a === correct8a;
-                    let isCorrect8b = ans8b === correct8b;
-                    
-                    if (isCorrect8a && isCorrect8b) score += 1;
-                    
-                    resultsHTML += `<p>Q8: ${isCorrect8a && isCorrect8b ? '✅' : '❌'} 
-                    Your answer: "${ans8a}" / "${ans8b}" | Correct: "${correct8a}" / "${correct8b}"</p>`;
-                } 
-                else if (i === 11) {
-                    // Handle matching question
-                    const ans11a = document.getElementById('q11a').value;
-                    const ans11b = document.getElementById('q11b').value;
-                    const ans11c = document.getElementById('q11c').value;
-                    const ans11d = document.getElementById('q11d').value;
-                    
-                    let correctCount = 0;
-                    if (ans11a === correctAnswers.q11a) correctCount++;
-                    if (ans11b === correctAnswers.q11b) correctCount++;
-                    if (ans11c === correctAnswers.q11c) correctCount++;
-                    if (ans11d === correctAnswers.q11d) correctCount++;
-                    
-                    score += correctCount / 4; // Each match is 0.25 points
-                    
-                    resultsHTML += `<p>Q11: ${correctCount}/4 correct</p>`;
+            // Present Continuous
+            pc1: "am reading", pc2: "aren't watching, are studying", pc3: "are doing",
+            pc4: "is cooking", pc5a: "work", pc5b: "am working", pc6: "is raining",
+            
+            // Past Simple
+            past1: "watched", past2: "cleaned", past3: "didn't visit",
+            past4: "went", past5: "ate", past6: "Did you visit London?",
+            past7: "What did they buy?",
+            
+            // Future
+            future1: "am going to visit", future2: "aren't going to travel",
+            future3: "will rain", future4: "Will help", future5: "is going to",
+            
+            // Modal Verbs
+            modal1: "can", modal2: "must", modal3: "mustn't", modal4: "should",
+            
+            // Articles
+            art1: "an", art2: "The", art3: "a", art4: "I have a dog",
+            
+            // Prepositions
+            prep1: "from", prep2: "to", prep3: "in", prep4: "on",
+            
+            // Comparatives
+            comp1: "more interesting", comp2: "taller", comp3: "best",
+            
+            // Word Order
+            word1: "I often go to the cinema", word2: "What did you do yesterday?"
+        };
+
+        // Acceptable variations
+        const variations = {
+            ps1: ["go"],
+            ps2: ["doesn't like", "does not like"],
+            ps4: ["Do play", "Do you play"],
+            ps6: ["don't speak", "do not speak"],
+            ps9: ["She doesn't work in an office", "She does not work in an office"],
+            ps10: ["I don't have breakfast at 7 AM", "I do not have breakfast at 7 AM"],
+            pc1: ["am reading", "'m reading"],
+            pc2: ["aren't watching, are studying", "are not watching, are studying"],
+            pc3: ["are doing"],
+            pc4: ["is cooking", "'s cooking"],
+            pc5b: ["am working", "'m working", "am working at"],
+            pc6: ["is raining", "'s raining"],
+            past3: ["didn't visit", "did not visit"],
+            past6: ["Did you visit London?", "Did you visit London"],
+            past7: ["What did they buy?", "What did they buy"],
+            future1: ["am going to visit", "'m going to visit"],
+            future2: ["aren't going to travel", "are not going to travel"],
+            future3: ["will rain", "'ll rain"],
+            future4: ["Will help", "Will you help"],
+            modal1: ["can", "can swim"],
+            modal4: ["should", "should eat"],
+            art4: ["I have a dog"],
+            prep1: ["from"], prep2: ["to"],
+            comp1: ["more interesting"],
+            comp2: ["taller"],
+            word1: ["I often go to the cinema", "Often I go to the cinema"],
+            word2: ["What did you do yesterday?", "What did you do yesterday"]
+        };
+
+        function checkAll() {
+            let score = 0;
+            let total = 42; // Total number of answer fields
+            
+            // Present Simple
+            checkTextInput('ps1', 'go', 1) && score++;
+            checkTextInput('ps2', "doesn't like", 1) && score++;
+            checkTextInput('ps3', 'watch', 1) && score++;
+            checkTextInput('ps4', 'Do play', 1) && score++;
+            checkTextInput('ps5', 'works', 1) && score++;
+            checkTextInput('ps6', "don't speak", 1) && score++;
+            checkRadio('ps7', 'goes') && score++;
+            checkRadio('ps8', 'Do') && score++;
+            checkTextInput('ps9', "She doesn't work in an office", 1) && score++;
+            checkTextInput('ps10', "I don't have breakfast at 7 AM", 1) && score++;
+            
+            // Present Continuous
+            checkTextInput('pc1', 'am reading', 2) && score++;
+            checkTextInput('pc2', "aren't watching, are studying", 2) && score++;
+            checkTextInput('pc3', 'are doing', 2) && score++;
+            checkTextInput('pc4', 'is cooking', 2) && score++;
+            checkTextInput('pc5a', 'work', 2) && score++;
+            checkTextInput('pc5b', 'am working', 2) && score++;
+            checkSelect('pc6', 'is raining') && score++;
+            
+            // Past Simple
+            checkTextInput('past1', 'watched', 3) && score++;
+            checkTextInput('past2', 'cleaned', 3) && score++;
+            checkTextInput('past3', "didn't visit", 3) && score++;
+            checkSelect('past4', 'went') && score++;
+            checkTextInput('past5', 'ate', 3) && score++;
+            checkTextInput('past6', 'Did you visit London?', 3) && score++;
+            checkTextInput('past7', 'What did they buy?', 3) && score++;
+            
+            // Future
+            checkTextInput('future1', 'am going to visit', 4) && score++;
+            checkTextInput('future2', "aren't going to travel", 4) && score++;
+            checkTextInput('future3', 'will rain', 4) && score++;
+            checkTextInput('future4', 'Will help', 4) && score++;
+            checkRadio('future5', 'is going to') && score++;
+            
+            // Modal Verbs
+            checkTextInput('modal1', 'can', 5) && score++;
+            checkSelect('modal2', 'must') && score++;
+            checkRadio('modal3', "mustn't") && score++;
+            checkTextInput('modal4', 'should', 5) && score++;
+            
+            // Articles
+            checkSelect('art1', 'an') && score++;
+            checkSelect('art2', 'The') && score++;
+            checkSelect('art3', 'a') && score++;
+            checkTextInput('art4', 'I have a dog', 6) && score++;
+            
+            // Prepositions
+            checkTextInput('prep1', 'from', 7) && score++;
+            checkTextInput('prep2', 'to', 7) && score++;
+            checkRadio('prep3', 'in') && score++;
+            checkSelect('prep4', 'on') && score++;
+            
+            // Comparatives
+            checkTextInput('comp1', 'more interesting', 8) && score++;
+            checkTextInput('comp2', 'taller', 8) && score++;
+            checkSelect('comp3', 'best') && score++;
+            
+            // Word Order
+            checkTextInput('word1', 'I often go to the cinema', 9) && score++;
+            checkTextInput('word2', 'What did you do yesterday?', 9) && score++;
+            
+            document.getElementById('totalScore').textContent = score;
+            alert(`You scored ${score} out of ${total}!\n\nPercentage: ${Math.round((score/total)*100)}%`);
+        }
+
+        function checkTextInput(id, correct, section) {
+            const input = document.getElementById(id);
+            const userAnswer = input.value.trim().toLowerCase();
+            const correctAnswer = correct.toLowerCase();
+            
+            if (variations[id]) {
+                const isCorrect = variations[id].some(v => 
+                    userAnswer === v.toLowerCase() || 
+                    userAnswer.includes(v.toLowerCase())
+                );
+                
+                if (isCorrect) {
+                    input.style.borderColor = '#2e7d32';
+                    input.style.backgroundColor = '#f1f8e9';
+                    return true;
+                } else {
+                    input.style.borderColor = '#c62828';
+                    input.style.backgroundColor = '#ffebee';
+                    return false;
                 }
-                else if (i === 13) {
-                    // Handle food question (two parts)
-                    const ans13a = document.getElementById('q13a').value.trim().toLowerCase();
-                    const ans13b = document.getElementById('q13b').value.trim().toLowerCase();
-                    
-                    const acceptable13a = acceptableAnswers.q13a || [];
-                    const acceptable13b = acceptableAnswers.q13b || [];
-                    
-                    let isCorrect13a = acceptable13a.some(a => ans13a.includes(a.toLowerCase()));
-                    let isCorrect13b = acceptable13b.some(b => ans13b.includes(b.toLowerCase()));
-                    
-                    if (isCorrect13a && isCorrect13b) score += 1;
-                    
-                    resultsHTML += `<p>Q13: ${isCorrect13a && isCorrect13b ? '✅' : '❌'} 
-                    Acceptable answers include: ${acceptable13a.join(', ')} / ${acceptable13b.join(', ')}</p>`;
-                }
-                else if (i === 25) {
-                    // Handle verb table
-                    const ans25a = document.getElementById('q25a').value.trim().toLowerCase();
-                    const ans25b = document.getElementById('q25b').value.trim().toLowerCase();
-                    const ans25c = document.getElementById('q25c').value.trim().toLowerCase();
-                    const ans25d = document.getElementById('q25d').value.trim().toLowerCase();
-                    
-                    let correctCount = 0;
-                    if (ans25a === "went") correctCount++;
-                    if (ans25b === "gone") correctCount++;
-                    if (ans25c === "ate") correctCount++;
-                    if (ans25d === "eaten") correctCount++;
-                    
-                    score += correctCount / 4;
-                    
-                    resultsHTML += `<p>Q25: ${correctCount}/4 correct</p>`;
-                }
-                else if (document.getElementById('q' + i)) {
-                    // Handle text input questions
-                    const userAnswer = document.getElementById('q' + i).value.trim().toLowerCase();
-                    const correct = correctAnswers['q' + i];
-                    const acceptable = acceptableAnswers['q' + i];
-                    
-                    let isCorrect = false;
-                    if (acceptable) {
-                        isCorrect = acceptable.some(ans => 
-                            userAnswer === ans.toLowerCase() || 
-                            userAnswer.includes(ans.toLowerCase())
-                        );
-                    } else {
-                        isCorrect = userAnswer === correct.toLowerCase();
-                    }
-                    
-                    if (isCorrect) {
-                        score++;
-                        resultsHTML += `<p>Q${i}: ✅ Correct!</p>`;
-                    } else {
-                        resultsHTML += `<p>Q${i}: ❌ Your answer: "${userAnswer}" | Correct: "${correct}"</p>`;
-                    }
-                }
-                else if (document.querySelector('input[name="q' + i + '"]:checked')) {
-                    // Handle radio button questions
-                    const userAnswer = document.querySelector('input[name="q' + i + '"]:checked').value;
-                    const correct = correctAnswers['q' + i];
-                    
-                    if (userAnswer === correct) {
-                        score++;
-                        resultsHTML += `<p>Q${i}: ✅ Correct!</p>`;
-                    } else {
-                        resultsHTML += `<p>Q${i}: ❌ Your answer: ${userAnswer} | Correct: ${correct}</p>`;
-                    }
+            } else {
+                if (userAnswer === correctAnswer) {
+                    input.style.borderColor = '#2e7d32';
+                    input.style.backgroundColor = '#f1f8e9';
+                    return true;
+                } else {
+                    input.style.borderColor = '#c62828';
+                    input.style.backgroundColor = '#ffebee';
+                    return false;
                 }
             }
+        }
+
+        function checkRadio(name, correct) {
+            const radios = document.querySelectorAll(`input[name="${name}"]`);
+            let isCorrect = false;
             
-            // Add writing section (always give points for attempt)
-            const writing1 = document.getElementById('writing1').value.trim();
-            const writing2 = document.getElementById('writing2').value.trim();
+            radios.forEach(radio => {
+                if (radio.checked && radio.value === correct) {
+                    radio.parentElement.style.color = '#2e7d32';
+                    radio.parentElement.style.fontWeight = 'bold';
+                    isCorrect = true;
+                } else if (radio.checked) {
+                    radio.parentElement.style.color = '#c62828';
+                    radio.parentElement.style.fontWeight = 'bold';
+                }
+            });
             
-            if (writing1.length > 20) score += 2;
-            if (writing2.length > 20) score += 2;
+            return isCorrect;
+        }
+
+        function checkSelect(id, correct) {
+            const select = document.getElementById(id);
+            if (select.value === correct) {
+                select.style.borderColor = '#2e7d32';
+                select.style.backgroundColor = '#f1f8e9';
+                return true;
+            } else {
+                select.style.borderColor = '#c62828';
+                select.style.backgroundColor = '#ffebee';
+                return false;
+            }
+        }
+
+        function resetAll() {
+            // Clear all inputs
+            document.querySelectorAll('input[type="text"]').forEach(input => {
+                input.value = '';
+                input.style.borderColor = '#c5d5ff';
+                input.style.backgroundColor = 'white';
+            });
             
-            // Display results
-            document.getElementById('score').textContent = Math.round(score);
-            document.getElementById('detailedResults').innerHTML = resultsHTML;
-            document.getElementById('results').style.display = 'block';
+            // Clear all radios
+            document.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.checked = false;
+                radio.parentElement.style.color = '';
+                radio.parentElement.style.fontWeight = '';
+            });
             
-            // Scroll to results
-            document.getElementById('results').scrollIntoView({behavior: 'smooth'});
+            // Reset all selects
+            document.querySelectorAll('select').forEach(select => {
+                select.selectedIndex = 0;
+                select.style.borderColor = '#c5d5ff';
+                select.style.backgroundColor = 'white';
+            });
+            
+            document.getElementById('totalScore').textContent = '0';
+            alert('All answers have been reset!');
         }
 
         function showAnswers() {
-            let answersHTML = "<h3>Correct Answers:</h3><ul>";
+            let answersText = "CORRECT ANSWERS:\n\n";
             
-            for (let i = 1; i <= 26; i++) {
-                if (correctAnswers['q' + i]) {
-                    answersHTML += `<li>Q${i}: ${correctAnswers['q' + i]}</li>`;
-                }
+            for (const [key, value] of Object.entries(answers)) {
+                answersText += `${key}: ${value}\n`;
             }
             
-            answersHTML += "</ul><p>Note: Some questions may have multiple correct answers.</p>";
-            document.getElementById('detailedResults').innerHTML = answersHTML;
-            document.getElementById('results').style.display = 'block';
-            document.getElementById('score').textContent = "See answers above";
-        }
-
-        function resetTest() {
-            // Clear all inputs
-            document.querySelectorAll('input[type="text"]').forEach(input => input.value = '');
-            document.querySelectorAll('input[type="radio"]').forEach(radio => radio.checked = false);
-            document.querySelectorAll('textarea').forEach(ta => ta.value = '');
-            document.querySelectorAll('select').forEach(select => select.selectedIndex = 0);
-            
-            // Hide results
-            document.getElementById('results').style.display = 'none';
-            
-            alert("Test has been reset. You can start again!");
+            alert(answersText);
         }
     </script>
-
-    <footer style="text-align: center; margin-top: 40px; color: #7f8c8d; font-size: 0.9em;">
-        <p>English A1-A2 Practice Test | Covers all grammar and vocabulary topics</p>
-        <p>Topics included: Present Simple, Present Continuous, Past Simple, Future, Modals, Articles, Prepositions, Comparatives, Vocabulary, Reading, Writing</p>
-    </footer>
 </body>
 </html>
